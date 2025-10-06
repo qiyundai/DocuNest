@@ -1,0 +1,88 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: docunest
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
+  vector:
+    image: qdrant/qdrant:latest
+    restart: unless-stopped
+    volumes:
+      - qdrant-data:/qdrant/storage
+    ports:
+      - '6333:6333'
+
+  files:
+    image: minio/minio:latest
+    command: server /data --console-address :9001
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    volumes:
+      - minio-data:/data
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+
+  queue:
+    image: redis:7
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+
+  api:
+    build:
+      context: ../../
+      dockerfile: apps/api/Dockerfile
+    depends_on:
+      - db
+      - vector
+      - queue
+    env_file:
+      - ../.env
+    ports:
+      - '4000:4000'
+
+  worker:
+    build:
+      context: ../../
+      dockerfile: apps/worker/Dockerfile
+    depends_on:
+      - api
+      - queue
+    env_file:
+      - ../.env
+
+  web:
+    build:
+      context: ../../
+      dockerfile: apps/web/Dockerfile
+    depends_on:
+      - api
+    env_file:
+      - ../.env
+    ports:
+      - '3000:3000'
+
+  proxy:
+    image: caddy:latest
+    depends_on:
+      - web
+      - api
+    ports:
+      - '8443:8443'
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+
+volumes:
+  db-data:
+  qdrant-data:
+  minio-data:

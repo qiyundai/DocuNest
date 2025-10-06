@@ -1,0 +1,9 @@
+http://:8443 {
+  encode gzip
+  handle_path /trpc* {
+    reverse_proxy api:4000
+  }
+  handle {
+    reverse_proxy web:3000
+  }
+}
