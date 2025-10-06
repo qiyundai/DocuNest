@@ -2,26 +2,26 @@ import { z } from 'zod';
 
 export const productSchema = z.object({
   model: z.string().min(1),
-  sku: z.string().min(1)
+  sku: z.string().min(1),
 });
 
 export const contentNodeSchema = z.discriminatedUnion('type', [
   z.object({
     type: z.literal('paragraph'),
-    text: z.string().min(1)
+    text: z.string().min(1),
   }),
   z.object({
     type: z.literal('image'),
     url: z.string().url(),
-    alt: z.string().optional()
-  })
+    alt: z.string().optional(),
+  }),
 ]);
 
 export const manualSectionSchema = z.object({
   id: z.string().uuid(),
   title: z.string().min(1),
   order: z.number().int().nonnegative(),
-  content: z.array(contentNodeSchema).default([])
+  content: z.array(contentNodeSchema).default([]),
 });
 
 export const manualSchema = z.object({
@@ -31,7 +31,7 @@ export const manualSchema = z.object({
   product: productSchema,
   version: z.string().min(1),
   locale: z.string().min(2),
-  sections: z.array(manualSectionSchema)
+  sections: z.array(manualSectionSchema),
 });
 
 export type Product = z.infer<typeof productSchema>;

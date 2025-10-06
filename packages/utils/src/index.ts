@@ -13,7 +13,7 @@ const envSchema = z.object({
   S3_ENDPOINT: z.string().url().optional(),
   S3_BUCKET: z.string().optional(),
   AI_PROVIDER: z.string().optional(),
-  OPENAI_API_KEY: z.string().optional()
+  OPENAI_API_KEY: z.string().optional(),
 });
 
 let cachedEnv: z.infer<typeof envSchema> | null = null;
@@ -26,10 +26,10 @@ export const logger = pino({
           target: 'pino-pretty',
           options: {
             colorize: true,
-            translateTime: 'SYS:standard'
-          }
+            translateTime: 'SYS:standard',
+          },
         }
-      : undefined
+      : undefined,
 });
 
 export const getEnv = (): z.infer<typeof envSchema> => {
