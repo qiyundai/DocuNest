@@ -4,7 +4,11 @@ import { ingestQueue } from '../queues';
 
 const jobs = new Map<
   string,
-  { status: 'queued' | 'completed' | 'failed'; createdAt: Date; updatedAt: Date }
+  {
+    status: 'queued' | 'completed' | 'failed';
+    createdAt: Date;
+    updatedAt: Date;
+  }
 >();
 
 export const adminRouter = router({
@@ -15,12 +19,12 @@ export const adminRouter = router({
           url: z.string().url().optional(),
           fileKey: z.string().optional(),
           productId: z.string().uuid(),
-          locale: z.string().min(2)
+          locale: z.string().min(2),
         })
       )
       .mutation(async ({ ctx, input }) => {
         const product = await ctx.prisma.product.findUnique({
-          where: { id: input.productId }
+          where: { id: input.productId },
         });
         if (!product) {
           throw new Error('Product not found');
@@ -30,14 +34,22 @@ export const adminRouter = router({
           productId: input.productId,
           locale: input.locale,
           url: input.url,
-          fileKey: input.fileKey
+          fileKey: input.fileKey,
         });
         const timestamp = new Date();
-        jobs.set(job.id, { status: 'queued', createdAt: timestamp, updatedAt: timestamp });
+        jobs.set(job.id, {
+          status: 'queued',
+          createdAt: timestamp,
+          updatedAt: timestamp,
+        });
         setTimeout(() => {
           const current = jobs.get(job.id);
           if (current && current.status === 'queued') {
-            jobs.set(job.id, { ...current, status: 'completed', updatedAt: new Date() });
+            jobs.set(job.id, {
+              ...current,
+              status: 'completed',
+              updatedAt: new Date(),
+            });
           }
         }, 1500);
         return { jobId: job.id };
@@ -50,6 +62,6 @@ export const adminRouter = router({
           return { status: 'not_found' } as const;
         }
         return job;
-      })
-  })
+      }),
+  }),
 });

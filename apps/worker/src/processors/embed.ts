@@ -21,7 +21,9 @@ const chunkText = (text: string, size = 400): string[] => {
 };
 
 const fakeEmbed = (text: string): number[] => {
-  const vector = new Array(8).fill(0).map((_, index) => Math.sin(text.length + index));
+  const vector = new Array(8)
+    .fill(0)
+    .map((_, index) => Math.sin(text.length + index));
   return vector;
 };
 
@@ -30,7 +32,7 @@ export const embedProcessor = async (
 ): Promise<EmbedJobResult> => {
   const manual = await prisma.manual.findUnique({
     where: { id: job.data.manualId },
-    include: { sections: true, product: true }
+    include: { sections: true, product: true },
   });
   if (!manual) {
     logger.warn({ manualId: job.data.manualId }, 'Manual not found for embedding');
@@ -59,8 +61,8 @@ export const embedProcessor = async (
           manualId: manual.id,
           sectionId: section.id,
           locale: manual.locale,
-          text: chunk
-        }
+          text: chunk,
+        },
       });
 
       if (vector) {
@@ -73,14 +75,17 @@ export const embedProcessor = async (
               productId: manual.productId,
               manualId: manual.id,
               locale: manual.locale,
-              sectionId: section.id
-            }
-          }
+              sectionId: section.id,
+            },
+          },
         ]);
       }
     }
   }
 
-  logger.info({ manualId: manual.id, chunks: totalChunks }, 'Embed job completed');
+  logger.info(
+    { manualId: manual.id, chunks: totalChunks },
+    'Embed job completed',
+  );
   return { chunks: totalChunks };
 };

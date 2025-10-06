@@ -7,8 +7,8 @@ async function main() {
     where: { name: 'Acme' },
     update: {},
     create: {
-      name: 'Acme'
-    }
+      name: 'Acme',
+    },
   });
 
   const product = await prisma.product.upsert({
@@ -18,8 +18,8 @@ async function main() {
       tenantId: tenant.id,
       name: 'Acme X100',
       model: 'X100',
-      sku: 'X100'
-    }
+      sku: 'X100',
+    },
   });
 
   const manual = await prisma.manual.upsert({
@@ -27,15 +27,15 @@ async function main() {
     update: {
       productId: product.id,
       version: '1.0.0',
-      locale: 'en-US'
+      locale: 'en-US',
     },
     create: {
       tenantId: tenant.id,
       productId: product.id,
       manualId: 'acme-x100-manual',
       version: '1.0.0',
-      locale: 'en-US'
-    }
+      locale: 'en-US',
+    },
   });
 
   const section = await prisma.manualSection.upsert({
@@ -46,9 +46,9 @@ async function main() {
       content: [
         {
           type: 'paragraph',
-          text: 'Always disconnect the X100 from power before servicing.'
-        }
-      ]
+          text: 'Always disconnect the X100 from power before servicing.',
+        },
+      ],
     },
     create: {
       id: manual.id,
@@ -58,10 +58,10 @@ async function main() {
       content: [
         {
           type: 'paragraph',
-          text: 'Always disconnect the X100 from power before servicing.'
-        }
-      ]
-    }
+          text: 'Always disconnect the X100 from power before servicing.',
+        },
+      ],
+    },
   });
 
   manualSchema.parse({
@@ -70,7 +70,7 @@ async function main() {
     tenantId: manual.tenantId,
     product: {
       model: product.model,
-      sku: product.sku
+      sku: product.sku,
     },
     version: manual.version,
     locale: manual.locale,
@@ -79,12 +79,15 @@ async function main() {
         id: section.id,
         title: section.title,
         order: section.order,
-        content: section.content as unknown[]
-      }
-    ]
+        content: section.content as unknown[],
+      },
+    ],
   });
 
-  logger.info({ tenantId: tenant.id, productId: product.id, manualId: manual.id }, 'Seed complete');
+  logger.info(
+    { tenantId: tenant.id, productId: product.id, manualId: manual.id },
+    'Seed complete',
+  );
 }
 
 main()

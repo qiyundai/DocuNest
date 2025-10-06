@@ -19,7 +19,7 @@ export const startWorker = () => {
       await embedQueue.add('embed-manual', { manualId: result.manualId });
       return result;
     },
-    { connection }
+    { connection },
   );
 
   const embedWorker = new Worker('embed', embedProcessor, { connection });

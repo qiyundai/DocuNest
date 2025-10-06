@@ -26,8 +26,8 @@ export const ingestProcessor = async (
       productId: job.data.productId,
       manualId,
       version: '1.0.0',
-      locale: job.data.locale
-    }
+      locale: job.data.locale,
+    },
   });
 
   await prisma.manualSection.create({
@@ -38,12 +38,15 @@ export const ingestProcessor = async (
       content: [
         {
           type: 'paragraph',
-          text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.'
-        }
-      ]
-    }
+          text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.',
+        },
+      ],
+    },
   });
 
-  logger.info({ jobId: job.id, manualId: manual.id }, 'Ingest job completed');
+  logger.info(
+    { jobId: job.id, manualId: manual.id },
+    'Ingest job completed',
+  );
   return { manualId: manual.id };
 };

@@ -18,14 +18,14 @@ export class QdrantClient {
     const body = {
       vectors: {
         size: vectorSize,
-        distance: 'Cosine'
-      }
+        distance: 'Cosine',
+      },
     };
 
     await fetch(`${this.baseUrl}/collections/${collection}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
     });
   }
 
@@ -33,7 +33,7 @@ export class QdrantClient {
     await fetch(`${this.baseUrl}/collections/${collection}/points`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ points })
+      body: JSON.stringify({ points }),
     });
   }
 }

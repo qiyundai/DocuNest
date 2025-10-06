@@ -6,10 +6,10 @@ export const searchRouter = router({
     .input(
       z.object({
         q: z.string().min(1),
-        productId: z.string().uuid().optional()
+        productId: z.string().uuid().optional(),
       })
     )
     .query(async () => {
       return [];
-    })
+    }),
 });

@@ -18,7 +18,7 @@ export class VectorClient {
     await fetch(`${this.baseUrl}/collections/${collection}/points`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ points })
+      body: JSON.stringify({ points }),
     });
   }
 }

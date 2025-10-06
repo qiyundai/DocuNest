@@ -15,17 +15,17 @@ export const docsRouter = router({
     .query(async ({ ctx, input }) => {
       const manuals = await ctx.prisma.manual.findMany({
         where: { tenantId: input.tenantId },
-        include: { product: true }
+        include: { product: true },
       });
       return manuals.map((manual) => ({
         id: manual.id,
         manualId: manual.manualId,
         product: {
           model: manual.product.model,
-          sku: manual.product.sku
+          sku: manual.product.sku,
         },
         version: manual.version,
-        locale: manual.locale
+        locale: manual.locale,
       }));
     }),
   getManual: publicProcedure
@@ -33,7 +33,7 @@ export const docsRouter = router({
     .query(async ({ ctx, input }) => {
       const manual = await ctx.prisma.manual.findUnique({
         where: { id: input.manualId },
-        include: { sections: { orderBy: { order: 'asc' } }, product: true }
+        include: { sections: { orderBy: { order: 'asc' } }, product: true },
       });
       if (!manual) {
         return null;
@@ -44,7 +44,7 @@ export const docsRouter = router({
         tenantId: manual.tenantId,
         product: {
           model: manual.product.model,
-          sku: manual.product.sku
+          sku: manual.product.sku,
         },
         version: manual.version,
         locale: manual.locale,
@@ -52,9 +52,9 @@ export const docsRouter = router({
           id: section.id,
           title: section.title,
           order: section.order,
-          content: normalizeContent(section.content)
-        }))
+          content: normalizeContent(section.content),
+        })),
       });
       return result;
-    })
+    }),
 });

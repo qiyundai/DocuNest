@@ -19,8 +19,8 @@ export const createServer = () => {
     '/trpc',
     createExpressMiddleware({
       router: appRouter,
-      createContext
-    })
+      createContext,
+    }),
   );
 
   return app;

@@ -10,7 +10,7 @@ export const appRouter = router({
   docs: docsRouter,
   search: searchRouter,
   ai: aiRouter,
-  admin: adminRouter
+  admin: adminRouter,
 });
 
 export type AppRouter = typeof appRouter;
