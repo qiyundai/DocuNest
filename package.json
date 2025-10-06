@@ -12,6 +12,8 @@
     "build": "pnpm -r build",
     "typecheck": "pnpm -r typecheck",
     "lint": "pnpm -r lint",
+    "format": "prettier \"**/*.{ts,tsx,js,jsx,md,mdx,json,yml,yaml}\" --write",
+    "format:check": "prettier \"**/*.{ts,tsx,js,jsx,md,mdx,json,yml,yaml}\" --check",
     "db:push": "pnpm --filter @docunest/api prisma migrate deploy && pnpm --filter @docunest/api prisma db push",
     "seed": "pnpm --filter @docunest/api tsx src/seed/seed.ts"
   },
@@ -21,6 +23,7 @@
     "@typescript-eslint/parser": "7.4.0",
     "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-unused-imports": "3.1.0",
     "prettier": "3.2.5",
     "typescript": "5.4.3"
   }
