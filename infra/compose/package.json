@@ -1,0 +1,9 @@
+{
+  "name": "@docunest/compose",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "docker compose -f docker-compose.yml up",
+    "down": "docker compose -f docker-compose.yml down"
+  }
+}
