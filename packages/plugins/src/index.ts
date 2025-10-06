@@ -29,13 +29,13 @@ export const createNoopAIProvider = (): AIProvider => ({
   async ask() {
     return {
       answer: '(stub) See manual.',
-      citations: []
+      citations: [],
     };
-  }
+  },
 });
 
 export const createNoopAnalyticsAdapter = (): AnalyticsAdapter => ({
   async track() {
     return Promise.resolve();
-  }
+  },
 });
