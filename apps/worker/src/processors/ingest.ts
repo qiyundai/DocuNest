@@ -16,7 +16,7 @@ export type IngestJobResult = {
 };
 
 export const ingestProcessor = async (
-  job: Job<IngestJobData, IngestJobResult>
+  job: Job<IngestJobData, IngestJobResult>,
 ): Promise<IngestJobResult> => {
   const manualId = randomUUID();
   const manual = await prisma.manual.create({
@@ -44,9 +44,6 @@ export const ingestProcessor = async (
     },
   });
 
-  logger.info(
-    { jobId: job.id, manualId: manual.id },
-    'Ingest job completed',
-  );
+  logger.info({ jobId: job.id, manualId: manual.id }, 'Ingest job completed');
   return { manualId: manual.id };
 };

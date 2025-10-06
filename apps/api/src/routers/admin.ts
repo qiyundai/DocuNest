@@ -20,7 +20,7 @@ export const adminRouter = router({
           fileKey: z.string().optional(),
           productId: z.string().uuid(),
           locale: z.string().min(2),
-        })
+        }),
       )
       .mutation(async ({ ctx, input }) => {
         const product = await ctx.prisma.product.findUnique({

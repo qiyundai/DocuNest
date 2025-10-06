@@ -12,7 +12,7 @@ export const aiRouter = router({
         productId: z.string().uuid().optional(),
         version: z.string().optional(),
         locale: z.string().optional(),
-      })
+      }),
     )
     .query(async ({ input }) => {
       const response = await aiProvider.ask({

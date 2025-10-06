@@ -7,7 +7,7 @@ export const searchRouter = router({
       z.object({
         q: z.string().min(1),
         productId: z.string().uuid().optional(),
-      })
+      }),
     )
     .query(async () => {
       return [];

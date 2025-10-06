@@ -28,14 +28,19 @@ const fakeEmbed = (text: string): number[] => {
 };
 
 export const embedProcessor = async (
-  job: Job<EmbedJobData, EmbedJobResult>
+  job: Job<EmbedJobData, EmbedJobResult>,
 ): Promise<EmbedJobResult> => {
   const manual = await prisma.manual.findUnique({
     where: { id: job.data.manualId },
     include: { sections: true, product: true },
   });
   if (!manual) {
-    logger.warn({ manualId: job.data.manualId }, 'Manual not found for embedding');
+    logger.warn(
+      {
+        manualId: job.data.manualId,
+      },
+      'Manual not found for embedding',
+    );
     return { chunks: 0 };
   }
 
@@ -45,7 +50,10 @@ export const embedProcessor = async (
   for (const section of manual.sections) {
     const textContent = Array.isArray(section.content)
       ? section.content
-          .filter((node: { type?: string; text?: string }) => node.type === 'paragraph')
+          .filter(
+            (node: { type?: string; text?: string }) =>
+              node.type === 'paragraph',
+          )
           .map((node) => node.text ?? '')
           .join(' ')
       : '';
