@@ -1,0 +1,27 @@
+{
+  "name": "docunest",
+  "private": true,
+  "packageManager": "pnpm@8.15.4",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "infra/*"
+  ],
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "pnpm -r lint",
+    "db:push": "pnpm --filter @docunest/api prisma migrate deploy && pnpm --filter @docunest/api prisma db push",
+    "seed": "pnpm --filter @docunest/api tsx src/seed/seed.ts"
+  },
+  "devDependencies": {
+    "@types/node": "20.11.30",
+    "@typescript-eslint/eslint-plugin": "7.4.0",
+    "@typescript-eslint/parser": "7.4.0",
+    "eslint": "8.57.0",
+    "eslint-config-prettier": "9.1.0",
+    "prettier": "3.2.5",
+    "typescript": "5.4.3"
+  }
+}
