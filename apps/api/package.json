@@ -14,7 +14,7 @@
     "build": "tsup src/server.ts --format esm --out-dir dist --dts false",
     "start": "node dist/server.js",
     "typecheck": "tsc --project tsconfig.json --noEmit",
-    "lint": "eslint src --ext .ts"
+    "lint": "eslint src --ext .ts,.tsx"
   },
   "dependencies": {
     "@docunest/plugins": "workspace:*",

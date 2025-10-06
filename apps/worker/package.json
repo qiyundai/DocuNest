@@ -9,7 +9,7 @@
     "build": "tsup src/index.ts --format esm --out-dir dist --dts false",
     "start": "node dist/index.js",
     "typecheck": "tsc --project tsconfig.json --noEmit",
-    "lint": "eslint src --ext .ts"
+    "lint": "eslint src --ext .ts,.tsx"
   },
   "dependencies": {
     "@docunest/schema": "workspace:*",
