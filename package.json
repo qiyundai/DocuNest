@@ -11,16 +11,18 @@
     "infra/*"
   ],
   "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck",
     "lint": "pnpm -r lint",
     "format": "prettier \"**/*.{ts,tsx,js,jsx,md,mdx,json,yml,yaml}\" --write",
     "format:check": "prettier \"**/*.{ts,tsx,js,jsx,md,mdx,json,yml,yaml}\" --check",
-    "typecheck": "pnpm -r typecheck",
-    "build": "pnpm -r build",
-    "dev": "pnpm -r --parallel dev",
     "db:push": "pnpm --filter @docunest/api prisma migrate deploy && pnpm --filter @docunest/api prisma db push",
     "seed": "pnpm --filter @docunest/api tsx src/seed/seed.ts"
   },
   "devDependencies": {
+    "@types/node": "20.11.30",
+    "typescript": "5.4.3",
     "eslint": "^8.57.1",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
