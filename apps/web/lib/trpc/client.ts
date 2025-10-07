@@ -3,7 +3,7 @@
 import { createTRPCProxyClient, httpBatchLink } from '@trpc/client';
 import type { AppRouter } from '@docunest/api';
 import superjson from 'superjson';
-import { DEFAULT_TENANT_ID } from '../constants.js';
+import { DEFAULT_TENANT_ID } from '../constants';
 
 const getBaseUrl = () => process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000';
 

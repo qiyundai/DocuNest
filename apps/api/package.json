@@ -11,7 +11,7 @@
   },
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "tsup src/server.ts --format esm --out-dir dist --dts false",
+    "build": "tsup src/server.ts --format esm --out-dir dist --no-dts",
     "start": "node dist/server.js",
     "typecheck": "tsc --project tsconfig.json --noEmit",
     "lint": "eslint src --ext .ts"

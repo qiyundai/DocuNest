@@ -19,7 +19,7 @@ export const docsRouter = router({
         orderBy: { updatedAt: 'desc' },
       });
 
-      return manuals.map((manual) => ({
+      return manuals.map((manual: any) => ({
         id: manual.id,
         manualId: manual.manualId,
         version: manual.version,
@@ -49,7 +49,7 @@ export const docsRouter = router({
         return null;
       }
 
-      const sections = manual.sections.map((section) =>
+      const sections = manual.sections.map((section: any) =>
         manualSectionSchema.parse({
           id: section.id,
           title: section.title,

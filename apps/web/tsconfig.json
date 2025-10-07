@@ -6,10 +6,30 @@
     "allowJs": false,
     "baseUrl": ".",
     "paths": {
-      "@/lib/*": ["./lib/*"],
-      "@/components/*": ["./components/*"]
-    }
+      "@/lib/*": [
+        "./lib/*"
+      ],
+      "@/components/*": [
+        "./components/*"
+      ]
+    },
+    "incremental": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "skipLibCheck": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

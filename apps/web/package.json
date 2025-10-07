@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@docunest/api": "workspace:*",
+    "@docunest/schema": "workspace:*",
+    "@docunest/utils": "workspace:*",
     "@tanstack/react-query": "5.28.6",
     "@trpc/client": "10.45.1",
     "@trpc/react-query": "10.45.1",
