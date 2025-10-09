@@ -1,18 +1,25 @@
 import { contentNodeSchema, manualSchema, manualSectionSchema } from '@docunest/schema';
 import { z } from 'zod';
 import { prisma } from '../db.js';
-import { publicProcedure, router } from './trpc.js';
+import { tenantProcedure, router } from './trpc.js';
 
 export const docsRouter = router({
-  listManuals: publicProcedure
+  listManuals: tenantProcedure
     .input(
       z.object({
-        tenantId: z.string().uuid(),
+        tenantId: z.string().uuid().optional(), // Optional since we get it from context
       }),
     )
-    .query(async ({ input }) => {
+    .query(async ({ input, ctx }) => {
+      // Use tenantId from authenticated context, fallback to input for backward compatibility
+      const tenantId = ctx.tenantId || input.tenantId;
+      
+      if (!tenantId) {
+        throw new Error('Tenant ID is required');
+      }
+      
       const manuals = await prisma.manual.findMany({
-        where: { tenantId: input.tenantId },
+        where: { tenantId },
         include: {
           product: true,
         },
@@ -33,15 +40,18 @@ export const docsRouter = router({
         updatedAt: manual.updatedAt,
       }));
     }),
-  getManual: publicProcedure
+  getManual: tenantProcedure
     .input(
       z.object({
         manualId: z.string().uuid(),
       }),
     )
-    .query(async ({ input }) => {
+    .query(async ({ input, ctx }) => {
       const manual = await prisma.manual.findUnique({
-        where: { id: input.manualId },
+        where: { 
+          id: input.manualId,
+          tenantId: ctx.tenantId // Ensure user can only access their tenant's manuals
+        },
         include: { sections: { orderBy: { order: 'asc' } }, product: true },
       });
 

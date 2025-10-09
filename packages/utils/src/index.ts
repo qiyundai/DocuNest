@@ -12,9 +12,19 @@ const envSchema = z.object({
   REDIS_URL: z.string().url().default('redis://localhost:6379'),
   S3_ENDPOINT: z.string().url(),
   S3_BUCKET: z.string().min(1),
+  S3_ACCESS_KEY: z.string().min(1),
+  S3_SECRET_KEY: z.string().min(8),
   AI_PROVIDER: z.string().default('openai'),
-  OPENAI_API_KEY: z.string().optional(),
+  OPENAI_API_KEY: z.string().min(1).optional(),
   VECTOR_BACKEND: z.string().default('qdrant'),
+  PORT: z.string().transform(Number).default('4000'),
+  ALLOWED_ORIGINS: z.string().optional(),
+  JWT_SECRET: z.string().min(32).optional(),
+  GOOGLE_CLIENT_ID: z.string().optional(),
+  GOOGLE_CLIENT_SECRET: z.string().optional(),
+  GITHUB_CLIENT_ID: z.string().optional(),
+  GITHUB_CLIENT_SECRET: z.string().optional(),
+  FRONTEND_URL: z.string().url().optional(),
 });
 
 type Env = z.infer<typeof envSchema>;
